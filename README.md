@@ -36,10 +36,12 @@ should to write:
     ```
     [read] - 'r'
     [write] - 'w'
+    [clear] - 'c'
 
     ```
     Read - reads hiden message in file.
     Write - writes hiden message in file.
+    Clear - clears hidden message in file.
 
 ---
 
@@ -47,4 +49,6 @@ should to write:
 1. Creating repository
 2. Added ```main.c```
 1. Edit ```README.md```
+1. New feature *[clear message]*, add file ```.gitignore```,
+fixed bugs with string overflow, and whitespaces.
 

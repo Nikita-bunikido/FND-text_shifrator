@@ -45,7 +45,15 @@ int next (char *txt){
     return (letter < strlen(txt)) ? to_binary(txt[letter], digit) : 0;
 }
 
-main (int argc, char *argv[]){
+/* getLine: puts input keyboard line in s */
+void getline(char *s, int limit){
+    int i, c;
+    for(i = 0; (c = getchar()) != '\n' && i < limit; s[i++] = c)
+        ;
+    s[i] = '\0';
+}
+
+int main (int argc, char *argv[]){
     int i, ws, flength;
     FILE *f = fopen(argv[1], "r");
 
@@ -76,12 +84,13 @@ main (int argc, char *argv[]){
 
     char ch, *message = (char*)malloc(ws / 8 * sizeof(char));
 
-    printf("\nFND - (c) Nikita Donskov 2021.\n[read] - 'r'\n[write] - 'w'\n> ");
+    printf("\nFND - (c) Nikita Donskov 2021.\n[read] - 'r'\n[write] - 'w'\n[clear] - 'c'\n> ");
     scanf("\n%c", &ch);
 
     if (ch == 'w' || ch == 'W'){
         printf("\n[warning] can write no more than %d characters\n> ", ws / 8);
-        scanf("\n%s", message);
+        getchar();
+        getline(message, ws / 8);
 
         fclose(f);
         f = fopen(argv[1], "w");
@@ -113,6 +122,14 @@ main (int argc, char *argv[]){
                 }
             }
         }
+    } else if (ch == 'c' || ch == 'C'){
+        fclose(f);
+        f = fopen(argv[1], "w");
+        for(i = 0; text[i] != '\0'; i++){
+            if (!(text[i] == ' ' && text[i + 1] == ' '))
+                fprintf(f, "%c", text[i]);
+        }
+        fclose(f);
     } else printf("error: unknown command: '%c'.", ch);
     free(text);
     free(message);
